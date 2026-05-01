@@ -10,7 +10,8 @@ const Home = () => {
     const handleAnalyze = async () => {
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:5000/api/analysis/analyze', {
+            const apiURL = import.meta.env.VITE_API_URL
+            const response = await axios.post(`${apiURL}analysis/analyze`, {
                 resumeText: resumeText,
                 jobDescription: jobDescription
             });
