@@ -1,15 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import Home from './pages/Home.jsx'
+import { ThemeProvider } from './context/ThemeContext'
+import { AuthProvider } from './context/AuthContext'
+import { CreditProvider } from './context/CreditContext'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
-    <Home />
+    <ThemeProvider>
+      <AuthProvider>
+        <CreditProvider>
+          <AppRoutes />
+        </CreditProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 
