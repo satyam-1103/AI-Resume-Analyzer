@@ -37,13 +37,13 @@ export default function HistoryCard({ item }) {
           </p>
         </div>
         <p className="mt-0.5 text-xs text-[color:var(--text-muted)]">
-          {formatDate(item.date)} · {item.creditsUsed} credits used
+          {formatDate(item.createdAt || item.date)} · {item.creditsUsed} credits used
         </p>
       </div>
 
       {/* Link */}
       <Link
-        to={`/dashboard/history/${item.id}`}
+        to={`/dashboard/history/${item._id || item.id}`}
         aria-label={`View details for ${item.filename}`}
         className="shrink-0 rounded-lg p-2 text-[color:var(--text-muted)] hover:bg-[color:var(--bg-subtle)] hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
       >

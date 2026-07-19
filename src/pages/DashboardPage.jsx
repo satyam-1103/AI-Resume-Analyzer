@@ -6,8 +6,10 @@ import CreditsWidget from '../components/dashboard/CreditsWidget'
 import HistoryCard from '../components/dashboard/HistoryCard'
 import Button from '../components/common/Button'
 import { getHistory } from '../services/historyService'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function DashboardPage() {
+  usePageTitle('Dashboard')
   const { user } = useAuth()
   const [recent, setRecent] = useState([])
   const [loading, setLoading] = useState(true)
@@ -88,7 +90,7 @@ export default function DashboardPage() {
             ) : recent.length > 0 ? (
               <div className="space-y-3">
                 {recent.map(item => (
-                  <HistoryCard key={item.id} item={item} />
+                  <HistoryCard key={item._id || item.id} item={item} />
                 ))}
               </div>
             ) : (

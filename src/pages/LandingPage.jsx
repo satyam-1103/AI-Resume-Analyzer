@@ -7,8 +7,10 @@ import HowItWorksStep from '../components/landing/HowItWorksStep'
 import CreditsBanner from '../components/landing/CreditsBanner'
 import Button from '../components/common/Button'
 import { Link } from 'react-router-dom'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function LandingPage() {
+  usePageTitle('Home')
   return (
     <div className="min-h-screen bg-[color:var(--bg-base)] flex flex-col">
       <Navbar />

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { login as loginService, signup as signupService } from '../services/authService'
+import { login as loginService, signup as signupService, logout as logoutService } from '../services/authService'
 
 const AuthContext = createContext(null)
 
@@ -70,12 +70,18 @@ export function AuthProvider({ children }) {
     }
   }, [_persist])
 
-  const logout = useCallback(() => {
-    setUser(null)
-    setToken(null)
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-  }, [])
+  const logout = useCallback(async () => {
+    try {
+      if (token) {
+        await logoutService();
+      }
+    } finally {
+      setUser(null)
+      setToken(null)
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    }
+  }, [token])
 
   const value = {
     user,

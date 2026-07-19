@@ -14,12 +14,15 @@ import ScoreGauge from '../components/atsTool/ScoreGauge'
 import SkillsGapList from '../components/atsTool/SkillsGapList'
 import EducationInsights from '../components/atsTool/EducationInsights'
 import ExperienceGapInsights from '../components/atsTool/ExperienceGapInsights'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function AtsToolPage() {
+  usePageTitle('ATS Checker')
   const { credits, loading: creditsLoading } = useCredits()
   const { analyze, result, loading: analyzeLoading, error, reset } = useResumeAnalysis()
 
   const [file, setFile] = useState(null)
+  const [jobDescription, setJobDescription] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
 
   // 1. Initial State
@@ -47,6 +50,20 @@ export default function AtsToolPage() {
         <div className="card p-6 sm:p-10">
           <ResumeUploader file={file} onFile={setFile} />
 
+          <div className="mt-6">
+            <label htmlFor="jobDescription" className="block text-sm font-medium text-[color:var(--text-primary)] mb-2">
+              Job Description (Optional but recommended)
+            </label>
+            <textarea
+              id="jobDescription"
+              rows={4}
+              className="w-full rounded-lg border border-[color:var(--border-base)] bg-[color:var(--bg-base)] p-3 text-sm text-[color:var(--text-primary)] focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+              placeholder="Paste the target job description here to get a more accurate ATS match..."
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+            />
+          </div>
+
           <div className="mt-8 flex justify-end">
             <Button
               size="lg"
@@ -65,7 +82,7 @@ export default function AtsToolPage() {
           loading={creditsLoading}
           onConfirm={async () => {
             setModalOpen(false)
-            await analyze(file)
+            await analyze(file, jobDescription)
             // TODO: backend integration — confirm if we need to manually POST to a save endpoint here,
             // or if the backend /analyze endpoint automatically saves it to history.
           }}
@@ -92,6 +109,7 @@ export default function AtsToolPage() {
           <button
             onClick={() => {
               setFile(null)
+              setJobDescription('')
               reset()
             }}
             className="mb-2 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] transition-colors"
@@ -102,7 +120,7 @@ export default function AtsToolPage() {
           <p className="text-sm text-[color:var(--text-muted)]">File: {file?.name || 'resume.pdf'}</p>
         </div>
         
-        <Button variant="secondary" onClick={() => { setFile(null); reset(); }}>
+        <Button variant="secondary" onClick={() => { setFile(null); setJobDescription(''); reset(); }}>
           Analyze another
         </Button>
       </div>

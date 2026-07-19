@@ -13,9 +13,11 @@ import ScoreGauge from '../components/atsTool/ScoreGauge'
 import SkillsGapList from '../components/atsTool/SkillsGapList'
 import EducationInsights from '../components/atsTool/EducationInsights'
 import ExperienceGapInsights from '../components/atsTool/ExperienceGapInsights'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function HistoryPage() {
   const { id } = useParams() // if present, we are in the detail view
+  usePageTitle(id ? 'Analysis Details' : 'History')
 
   const [items, setItems] = useState([])
   const [detail, setDetail] = useState(null)
@@ -80,7 +82,7 @@ export default function HistoryPage() {
               <p className="text-sm text-[color:var(--text-muted)]">File: {detail.filename}</p>
             </div>
             <p className="text-xs text-[color:var(--text-muted)]">
-              Analyzed on {new Date(detail.date).toLocaleDateString()}
+              Analyzed on {new Date(detail.createdAt || detail.date).toLocaleDateString()}
             </p>
           </div>
         </div>
@@ -130,7 +132,7 @@ export default function HistoryPage() {
       {/* Mobile cards */}
       <div className="md:hidden space-y-3">
         {items.length > 0 ? (
-          items.map((item) => <HistoryCard key={item.id} item={item} />)
+          items.map((item) => <HistoryCard key={item._id || item.id} item={item} />)
         ) : (
           <div className="card p-8 text-center bg-[color:var(--bg-subtle)] border-dashed">
             <p className="text-sm text-[color:var(--text-muted)]">No analyses found.</p>

@@ -14,13 +14,13 @@ export function useResumeAnalysis() {
   const [error, setError] = useState(null)
   const { refetch: refetchCredits } = useCredits()
 
-  const analyze = useCallback(async (file) => {
+  const analyze = useCallback(async (file, jobDescription) => {
     setLoading(true)
     setError(null)
     setResult(null)
 
     try {
-      const data = await analyzeResume(file)
+      const data = await analyzeResume(file, jobDescription)
       setResult(data)
       // Refetch credit balance — backend is the source of truth
       await refetchCredits()

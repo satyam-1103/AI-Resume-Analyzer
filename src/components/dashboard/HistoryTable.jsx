@@ -55,13 +55,13 @@ export default function HistoryTable({ items }) {
         <tbody>
           {items.map((item, i) => (
             <tr
-              key={item.id}
+              key={item._id || item.id}
               className={`border-b border-[color:var(--border-base)] hover:bg-[color:var(--bg-subtle)] transition-colors ${
                 i === items.length - 1 ? 'border-b-0' : ''
               }`}
             >
               <td className="px-5 py-4 text-[color:var(--text-secondary)] whitespace-nowrap">
-                {formatDate(item.date)}
+                {formatDate(item.createdAt || item.date)}
               </td>
               <td className="px-5 py-4 max-w-[200px] truncate text-[color:var(--text-primary)]" title={item.filename}>
                 {item.filename}
@@ -74,7 +74,7 @@ export default function HistoryTable({ items }) {
               </td>
               <td className="px-5 py-4 text-right">
                 <Link
-                  to={`/dashboard/history/${item.id}`}
+                  to={`/dashboard/history/${item._id || item.id}`}
                   className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/40 transition-colors"
                 >
                   View details <ExternalLink size={12} />
