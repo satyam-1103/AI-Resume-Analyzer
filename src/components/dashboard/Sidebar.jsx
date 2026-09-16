@@ -20,7 +20,7 @@ const NAV_ITEMS = [
   { label: 'Overview',       icon: LayoutDashboard, to: '/dashboard',         end: true },
   { label: 'ATS Score Tool', icon: Sparkles,        to: '/dashboard/ats' },
   { label: 'History',        icon: History,         to: '/dashboard/history' },
-  { label: 'Settings',       icon: Settings,        to: '/dashboard/settings' },
+  { label: 'Settings',       icon: Settings,        to: '/dashboard/settings', adminOnly: true },
 ]
 
 // Disabled placeholder — no pricing page
@@ -106,7 +106,7 @@ function SidebarInner({ collapsed, onToggle, onClose }) {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-        {NAV_ITEMS.map((item) => (
+        {NAV_ITEMS.filter((item) => !item.adminOnly || user?.role === 'admin').map((item) => (
           <NavItem key={item.label} item={item} collapsed={collapsed} />
         ))}
         <NavItem item={UPGRADE_ITEM} collapsed={collapsed} />

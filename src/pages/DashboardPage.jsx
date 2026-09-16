@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import CreditsWidget from '../components/dashboard/CreditsWidget'
+import AdminCreditGenerator from '../components/dashboard/AdminCreditGenerator'
 import HistoryCard from '../components/dashboard/HistoryCard'
 import Button from '../components/common/Button'
 import { getHistory } from '../services/historyService'
@@ -104,6 +105,7 @@ export default function DashboardPage() {
         {/* Right column */}
         <div className="space-y-6">
           <CreditsWidget />
+          <AdminCreditGenerator />
         </div>
       </div>
     </div>
